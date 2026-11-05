@@ -1,0 +1,13 @@
+{
+  "name": "coarse-lecture-hsm",
+  "version": "1.0.0",
+  "description": "Крупномасштабная математика — лекция для школьников (HTML-презентация)",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "author": "А. А. Арутюнов",
+  "dependencies": {
+    "@fontsource/pt-sans": "^5.0.13",
+    "katex": "^0.16.11"
+  }
+}

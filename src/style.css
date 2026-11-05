@@ -1,0 +1,105 @@
+/* ---------- палитра (как в Beamer-версии) ---------- */
+:root {
+  --accA: rgb(31, 94, 168);     /* синий */
+  --accB: rgb(214, 110, 20);    /* оранжевый */
+  --accR: rgb(190, 30, 45);     /* красный */
+  --ink: #1d1d1f;
+  --muted: #6b6f76;
+  --paper: #ffffff;
+  --blockbg: rgba(31, 94, 168, 0.06);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #111; overflow: hidden; }
+body { font-family: "PT Sans", "Segoe UI", Arial, sans-serif; color: var(--ink); }
+
+/* ---------- сцена: логический слайд 1600×900, масштабируется под окно ---------- */
+#stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+#deck { position: relative; width: 1600px; height: 900px; transform-origin: center center; }
+.slide {
+  position: absolute; inset: 0; background: var(--paper);
+  padding: 56px 80px 60px; display: none; flex-direction: column;
+  font-size: 34px; line-height: 1.38;
+}
+.slide.active { display: flex; }
+.slide h2 {
+  margin: 0 0 28px; font-size: 50px; font-weight: 700; color: var(--accA);
+  letter-spacing: 0.005em;
+}
+.slide .num { position: absolute; right: 34px; bottom: 22px; font-size: 22px; color: var(--muted); }
+.slide p { margin: 0 0 18px; }
+.slide ul { margin: 0 0 18px; padding-left: 1.1em; }
+.slide li { margin: 0 0 10px; }
+.slide li::marker { color: var(--accA); }
+.small { font-size: 27px; color: #333; }
+.muted { color: var(--muted); }
+.cA { color: var(--accA); } .cB { color: var(--accB); } .cR { color: var(--accR); }
+
+/* ---------- блоки (как beamer block) ---------- */
+.block { border-radius: 10px; overflow: hidden; margin: 6px 0 20px; background: var(--blockbg); }
+.block > .bt { background: var(--accA); color: #fff; padding: 6px 22px; font-weight: 700; font-size: 30px; }
+.block > .bb { padding: 14px 22px 16px; }
+
+/* ---------- раскладки ---------- */
+.row { display: flex; gap: 48px; flex: 1; min-height: 0; }
+.col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.grow { flex: 1; min-height: 0; position: relative; }
+.center { display: flex; align-items: center; justify-content: center; }
+.fig { position: relative; width: 100%; height: 100%; }
+.fig canvas, .fig svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ---------- пошаговое появление ---------- */
+[data-from], [data-only] { transition: opacity 0.35s ease; }
+.hidden-step { opacity: 0; pointer-events: none; }
+.gone-step { display: none !important; }
+
+/* ---------- подписи, наложенные на рисунки ---------- */
+.caption { position: absolute; left: 0; right: 0; text-align: center; font-size: 30px; }
+.tag { position: absolute; font-size: 32px; white-space: nowrap; }
+
+/* ---------- титульный слайд ---------- */
+.title-slide { justify-content: center; align-items: center; text-align: center; }
+.title-slide h1 { font-size: 78px; color: var(--accA); margin: 0 0 40px; font-weight: 700; }
+.title-slide .author { font-size: 40px; margin-bottom: 10px; }
+.title-slide .inst { font-size: 30px; color: var(--muted); }
+
+/* ---------- таблица 2×2 ---------- */
+table.grid2 { border-collapse: collapse; width: 100%; font-size: 30px; }
+table.grid2 th, table.grid2 td { border: 2px solid #c9d3e3; padding: 18px 22px; vertical-align: middle; }
+table.grid2 th { background: var(--blockbg); color: var(--accA); font-weight: 700; }
+table.grid2 td { height: 190px; }
+
+/* ---------- подсказка по клавишам ---------- */
+#help {
+  position: fixed; right: 18px; bottom: 18px; background: rgba(0,0,0,0.78); color: #fff;
+  padding: 14px 18px; border-radius: 8px; font-size: 15px; line-height: 1.6; z-index: 10;
+}
+
+/* KaTeX: чуть крупнее основного текста */
+.katex { font-size: 1.04em; }
+.katex .katex-html { white-space: nowrap; }
+.katex-display { margin: 0.45em 0; }
+
+/* сноска внизу слайда */
+.foot { position: absolute; left: 80px; right: 120px; bottom: 22px; font-size: 21px; color: var(--muted); }
+.foot a { color: var(--accA); }
+/* две колонки текста с рисунком; таблицы */
+.formulas p { margin: 0 0 10px; }
+table.plain { border-collapse: collapse; font-size: 30px; }
+table.plain td, table.plain th { padding: 8px 22px; border-bottom: 1.5px solid #d5dbe5; text-align: left; }
+table.plain th { color: var(--accA); }
+table.grid2 td.why { font-size: 25px; color: var(--muted); }
+
+/* слайд «Метрика»: строки «шар + формула» */
+.mrow { display: flex; align-items: center; gap: 26px; flex: 1; min-height: 0; }
+.mfig { position: relative; width: 190px; height: 190px; flex: 0 0 190px; }
+
+/* без висячих коротких последних строк */
+p, li, .bb, td, th, .small { text-wrap: pretty; }
+h2 { text-wrap: balance; }
+.nw { white-space: nowrap; }
+table.grid2.compact { font-size: 27px; }
+table.grid2.compact th, table.grid2.compact td { padding: 12px 16px; height: auto; }
+table.grid2.compact td { height: 92px; }
+
+.col > .block, .col > p, .col > table { flex-shrink: 0; }
+.slide > .block { flex-shrink: 0; }

@@ -1,0 +1,647 @@
+<!-- ======================================================
+     Крупномасштабная математика — 90 мин, школьники
+     Формулы: $...$ и $$...$$ (KaTeX при сборке).
+     Весь текст слайда виден сразу; .fig[data-fig] — зацикленные анимации.
+     ====================================================== -->
+<section class="slide title-slide">
+  <h1>Крупномасштабная математика</h1>
+  <div class="author">Андроник Арутюнов</div>
+  <div class="inst">ВШМ МФТИ</div>
+</section>
+
+<section class="slide">
+  <h2>Похожие и непохожие графы</h2>
+  <div class="grow"><div class="fig" data-fig="similarFour"></div></div>
+</section>
+
+<section class="slide">
+  <h2>Цилиндр</h2>
+  <div class="row">
+    <div class="col" style="flex:1.45"><div class="grow"><div class="fig" data-fig="tubeRoll"></div></div></div>
+    <div class="col" style="flex:1;justify-content:center">
+      <p>$\gamma_1$ — полоса ширины 9, у которой склеены края.</p>
+      <p>Через все вершины $\gamma_1$ по одному разу проходит <span class="cB nw">винтовая линия</span> —
+        «прямая» внутри цилиндра. Она и делает $\gamma_1$ похожим на прямую.</p>
+      <p>Занумеруем вершины вдоль неё целыми числами. Тогда $n$ соединено с $n\pm1$, $n\pm8$, $n\pm9$, $n\pm10$.</p>
+      <div class="block"><div class="bb">Локально графы $\gamma_1$ и $\gamma_2$ неотличимы,
+        но издалека $\gamma_1$ — прямая, а $\gamma_2$ — плоскость.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Издалека</h2>
+  <div class="grow">
+    <div class="fig" data-fig="tubeFar" style="top:56px;height:calc(100% - 56px)"></div>
+    <div class="tag" style="left:25%;top:0;transform:translateX(-50%)">$\gamma_1$</div>
+    <div class="tag" style="left:75%;top:0;transform:translateX(-50%)">$\gamma_2$</div>
+  </div>
+  <div class="block" style="margin-top:18px"><div class="bb">
+    Точнее: шары радиуса $r\le 2$ в $\gamma_1$ и в $\gamma_2$ изометричны.
+    Если взять полосу ширины $w$, то изометричны шары радиуса $r\le w/4$.
+  </div></div>
+</section>
+
+<section class="slide">
+  <h2>Бывает и наоборот</h2>
+  <div class="grow">
+    <div class="fig" data-fig="zoomFour" style="top:58px;height:calc(100% - 58px)"></div>
+    <div class="tag" style="left:12.6%;top:0;transform:translateX(-50%)">$\Z$</div>
+    <div class="tag" style="left:37.5%;top:0;transform:translateX(-50%)">$\Lad=\Z\times\{1,2\}$</div>
+    <div class="tag" style="left:62.4%;top:0;transform:translateX(-50%)">$\Z^2$</div>
+    <div class="tag" style="left:87.4%;top:0;transform:translateX(-50%)">королевский граф</div>
+  </div>
+  <div style="margin-top:18px">
+    <p>Вблизи все четыре графа разные: у вершин $2$, $3$, $4$ и $8$ соседей.</p>
+    <p>Издалека $\Z$ и $\Lad$ — одна и та же прямая,
+      а $\Z^2$ и королевский граф — одна и та же плоскость.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Метрика</h2>
+  <div class="row">
+    <div class="col" style="flex:1;justify-content:center">
+      <div class="block"><div class="bt">Определение</div><div class="bb">
+        Метрика на множестве $X$ — функция $d(x,y)\ge 0$, такая что
+        <ol style="margin:6px 0 0;padding-left:1.2em">
+          <li>$d(x,y)=0 \iff x=y$;</li>
+          <li>$d(x,y)=d(y,x)$;</li>
+          <li>$d(x,z)\le d(x,y)+d(y,z)$ — неравенство треугольника.</li>
+        </ol>
+      </div></div>
+      <p><b>Шар:</b> $\ \Ball(v,n):=\{u\in X:\ d(v,u)\le n\}$.</p>
+      <p class="small muted">Справа — шары $\Ball(0,1)$ трёх метрик на плоскости. Всегда $d_\infty\le d_2\le d_1\le 2\,d_\infty$.</p>
+    </div>
+    <div class="col" style="flex:1.25">
+      <div class="mrow"><div class="mfig"><div class="fig" data-fig="metricBall" data-kind="2"></div></div>
+        <div><div class="muted small">евклидова</div>$d_2(x,y):=\sqrt{(x_1-y_1)^2+(x_2-y_2)^2}$</div></div>
+      <div class="mrow"><div class="mfig"><div class="fig" data-fig="metricBall" data-kind="1"></div></div>
+        <div><div class="muted small">манхэттенская</div>$d_1(x,y):=|x_1-y_1|+|x_2-y_2|$</div></div>
+      <div class="mrow"><div class="mfig"><div class="fig" data-fig="metricBall" data-kind="inf"></div></div>
+        <div><div class="muted small">шахматного короля</div>$d_\infty(x,y):=\max\bigl(|x_1-y_1|,\,|x_2-y_2|\bigr)$</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Метрика графа</h2>
+  <div class="row">
+    <div class="col" style="flex:1.05">
+      <p>$\gamma$ — связный граф, $d(u,v):=$ наименьшее число рёбер в пути из $u$ в $v$.</p>
+      <ol style="padding-left:1.2em">
+        <li>$d(u,v)=0$ только для пути из нуля рёбер, то есть при $u=v$.</li>
+        <li>Путь можно пройти в обратную сторону: $d(u,v)=d(v,u)$.</li>
+        <li>Кратчайшие пути $u\to v$ и $v\to w$ вместе дают путь $u\to w$ длины $d(u,v)+d(v,w)$. Отсюда неравенство
+          $d(u,w)\le d(u,v)+d(v,w)$.</li>
+      </ol>
+      <p class="small">На вершинах $\Z^2$ метрика графа — это $d_1$, а на вершинах королевского графа — $d_\infty$.</p>
+    </div>
+    <div class="col" style="flex:1"><div class="grow"><div class="fig" data-fig="graphTriangle"></div></div></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Граф как метрическое пространство</h2>
+  <ul>
+    <li><b>Изометрия</b> — биекция, сохраняющая расстояния. Для графов это то же, что изоморфизм:
+      рёбра — ровно пары вершин на расстоянии $1$.</li>
+    <li>Дальше все графы связные, и степени их вершин ограничены одним числом.</li>
+  </ul>
+  <div class="grow"><div class="fig" data-fig="triptych"></div></div>
+  <p class="small muted" style="text-align:center;margin:0">$T_3$ — бесконечное дерево, у каждой вершины которого три соседа.</p>
+</section>
+
+<section class="slide">
+  <h2>Шары в $\Z^2$</h2>
+  <div class="row">
+    <div class="col" style="flex:1.5"><div class="grow"><div class="fig" data-fig="ballsThree"></div></div></div>
+    <div class="col" style="flex:1;justify-content:center">
+      <p>$\#\Ball(v,n)$ — число точек $\Z^2$ <span class="nw">в шаре радиуса $n$:</span></p>
+      <p><span class="cA">$d_1$, ромб:</span> $\ \#\Ball=2n^2\pm Cn$</p>
+      <p><span class="cB">$d_2$, круг:</span> $\ \#\Ball=\pi n^2\pm Cn$</p>
+      <p><span class="cR">$d_\infty$, квадрат:</span> $\ \#\Ball=4n^2\pm Cn$</p>
+      <p class="small muted">Метрика графа $\Z^2$ — это $d_1$, королевского графа — $d_\infty$.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Планарность</h2>
+  <div class="row">
+    <div class="col" style="flex:1"><div class="grow"><div class="fig" data-fig="utilities"></div></div></div>
+    <div class="col" style="flex:1.1;justify-content:center">
+      <p>Граф <b>планарный</b>, если его можно нарисовать на плоскости так, чтобы рёбра не пересекались.</p>
+      <p>Граф «домики — колодцы» $K_{3,3}$ непланарен: нельзя соединить каждый <span class="cA">домик</span>
+        с каждым <span class="cB">колодцем</span> так, чтобы тропинки не пересеклись.</p>
+      <div class="block"><div class="bb">Планарность — изометрический инвариант: изометричные графы
+        либо оба планарны, либо оба нет.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Теорема Понтрягина–Куратовского</h2>
+  <p><b>Подразбиение</b> графа: добавление на рёбра новых вершин.</p>
+  <div class="block"><div class="bt">Теорема (Л.&nbsp;С.&nbsp;Понтрягин, К.&nbsp;Куратовский, 1930)</div><div class="bb">
+    Граф непланарен $\iff$ он содержит подграф, изоморфный подразбиению $K_5$ или $K_{3,3}$.
+  </div></div>
+  <div class="grow"><div class="fig" data-fig="kuratowski"></div></div>
+</section>
+
+<section class="slide">
+  <h2>Граф Петерсена непланарен</h2>
+  <div class="row">
+    <div class="col" style="flex:1.1"><div class="grow"><div class="fig" data-fig="petersen"></div></div></div>
+    <div class="col" style="flex:1;justify-content:center">
+      <ul>
+        <li>10 вершин, 15 рёбер, у каждой вершины 3 соседа.</li>
+        <li>Удалим <span class="cR">вершину</span> вместе с тремя рёбрами. Останутся
+          6 вершин степени 3 (<span class="cA">синие</span> и <span class="cB">оранжевые</span>)
+          и 3 вершины степени 2 (белые) — точки подразбиения.</li>
+        <li>Каждая <span class="cA">синяя</span> вершина соединена путём с каждой
+          <span class="cB">оранжевой</span>: это подразбиение $K_{3,3}$.
+          Значит, граф Петерсена непланарен.</li>
+        <li>Рисунок всё время симметричен относительно пунктирной оси;
+          в конце его переводит в себя ещё и <span class="nw">поворот на $120^\circ$.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Изометрический инвариант: 2-связность</h2>
+  <p>Граф <b>2-связен</b>, если после удаления любой вершины он остаётся связным.</p>
+  <ul>
+    <li>$\Z$ — не 2-связен.</li>
+    <li>Лестница $\Lad=\Z\times\{1,2\}$ и решётка $\Z^2$ — 2-связны.</li>
+  </ul>
+  <div class="grow"><div class="fig" data-fig="twoConnected"></div></div>
+</section>
+
+<section class="slide">
+  <h2>Изометрия слишком строгая</h2>
+  <p><b>Что теряется при взгляде на граф издалека?</b></p>
+  <ul>
+    <li>Планарность и 2-связность сохраняются при изометриях.</li>
+    <li>Но при взгляде издалека они теряются: $\Z$ не 2-связен, а $\Lad$ 2-связна;
+      $\Z^2$ планарна, а королевский граф — нет. Издалека же это одна прямая и одна плоскость.</li>
+  </ul>
+  <p style="margin-top:22px"><b>Что должно сохраняться?</b></p>
+  <ul>
+    <li>поведение графа на бесконечности;</li>
+    <li>число бесконечных компонент связности, которые остаются после удаления больших шаров;</li>
+    <li>скорость роста числа вершин в шаре.</li>
+  </ul>
+  <div class="block" style="margin-top:22px"><div class="bb">
+    Нужно новое отношение эквивалентности: оно забывает локальные свойства вроде планарности и 2-связности,
+    но помнит крупномасштабные.
+  </div></div>
+</section>
+
+<section class="slide">
+  <h2>Квазиизометрия: идея</h2>
+  <div class="grow"><div class="fig" data-fig="qiIdea"></div></div>
+  <div class="row" style="flex:0 0 auto;gap:0;text-align:center;margin:4px 0 26px;font-size:27px">
+    <div class="col" style="flex:1"><div>$d\bigl(f(x),f(y)\bigr)\ge\tfrac1\lambda\,d(x,y)-C$</div></div>
+    <div class="col" style="flex:1"><div>$d\bigl(f(x),f(y)\bigr)\le\lambda\,d(x,y)+C$</div></div>
+    <div class="col" style="flex:1"><div>$d\bigl(y,f(\Z)\bigr)\le C$ для всех $y$</div></div>
+  </div>
+  <p style="margin-top:12px">Отображение $f\colon\Z\to\Lad$, $f(n):=(n,1)$: расстояния почти не меняются,
+    а образ подходит к каждой вершине $\Lad$ на расстояние $1$.</p>
+</section>
+
+<section class="slide">
+  <h2>Квазиизометрия</h2>
+  <div class="block"><div class="bt">Определение</div><div class="bb">
+    Отображение $f\colon X\to Y$ — <i>квазиизометрия</i>, если есть числа $\lambda\ge1$, $C\ge0$, такие что для всех $x,y\in X$
+    $$\tfrac1\lambda\, d(x,y)-C\;\le\; d\bigl(f(x),f(y)\bigr)\;\le\;\lambda\, d(x,y)+C,$$
+    и каждая точка $Y$ лежит на расстоянии $\le C$ от образа $f$.
+  </div></div>
+  <ul>
+    <li>$X\sim Y$, если есть квазиизометрия $X\to Y$.</li>
+    <li>Тогда есть и квазиизометрия обратно: $g(y):=$ любое $x$ с $d\bigl(f(x),y\bigr)\le C$.</li>
+    <li>$\sim$ — отношение эквивалентности. Это частный случай <i>грубой эквивалентности</i>.</li>
+    <li>Частный случай: при $\lambda=1$, $C=0$ квазиизометрия — это изометрия.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Пример: $\Z\sim\Lad$</h2>
+  <div class="row" style="flex:0 0 auto;gap:40px">
+    <div class="col" style="flex:1.1;font-size:27px;line-height:1.45">
+      <div><span class="nw">$\varphi\colon\Lad\to\Z$, $\ \varphi(n,1):=2n$, $\ \varphi(n,2):=2n+1$</span> — биекция.</div>
+      <div><span class="nw">$d_\Lad\bigl((n,k),(m,l)\bigr)=a+b$,</span> <span class="nw">где $a:=|n-m|$, $b:=|k-l|\in\{0,1\}$;</span></div>
+      <div>$d_\Z\bigl(\varphi(n,k),\varphi(m,l)\bigr)=\bigl|2(n-m)+(k-l)\bigr|$.</div>
+      <div><b>Сверху:</b> $\le 2a+b\le 2(a+b)$.</div>
+      <div><b>Снизу:</b> при $a=0$ это $b$; <span class="nw">при $a\ge1$ это $\ge 2a-1\ge a\ge\tfrac12(a+b)$.</span></div>
+    </div>
+    <div class="col" style="flex:1;justify-content:center">
+      <div class="block"><div class="bb">
+        <div style="font-size:28px">$$\tfrac12 d_\Lad(x,y)-0\le d_\Z(\varphi x,\varphi y)\le 2\,d_\Lad(x,y)+0$$</div>
+        $\lambda=2$, $C=0$; обе оценки достигаются (красные дуги).
+      </div></div>
+    </div>
+  </div>
+  <div class="grow"><div class="fig" data-fig="ladder"></div></div>
+</section>
+
+<section class="slide">
+  <h2>Конечные графы</h2>
+  <div class="row">
+    <div class="col" style="flex:1.1;justify-content:center">
+      <div class="block"><div class="bt">Утверждение</div><div class="bb">Любой конечный граф квазиизометричен точке.</div></div>
+      <p>Пусть $\gamma$ — конечный граф, $f$ — отображение <span class="nw">«всё в точку»</span>: $f(x):=\ast$. Пусть $D:=\operatorname{diam}\gamma$ — наибольшее расстояние между вершинами. Тогда
+        $$d(x,y)-D\ \le\ 0=d\bigl(f(x),f(y)\bigr)\ \le\ d(x,y),$$
+        то есть $\lambda=1$, $C=D$.</p>
+      <p class="muted">Издалека конечный граф — точка.</p>
+    </div>
+    <div class="col" style="flex:0.9"><div class="grow"><div class="fig" data-fig="finiteShrink"></div></div></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Решётки на плоскости</h2>
+  <p>$\Z^2\ \sim\ $ королевский граф $\ \sim\ $ треугольная решётка $\ \sim\ $ гексагональная решётка.</p>
+  <div class="grow"><div class="fig" data-fig="lattices"></div></div>
+  <p class="small" style="margin:2px 0 4px">$d_{\text{кв}}$, $d_{\text{кор}}$, $d_{\text{тр}}$, $d_{\text{гекс}}$ — метрики этих графов (наименьшее число рёбер в пути).</p>
+  <table class="plain" style="font-size:26px">
+    <tr><td class="nw">квадратная $\to$ королевская</td><td>тождественное на $\Z^2$</td><td>$d_{\text{кор}}\le d_{\text{кв}}\le 2\,d_{\text{кор}}$</td></tr>
+    <tr><td class="nw">треугольная $\to$ королевская</td><td>тождественное: треугольная — это $\Z^2$ с диагоналями одного направления</td><td>$d_{\text{кор}}\le d_{\text{тр}}\le 2\,d_{\text{кор}}$</td></tr>
+    <tr><td class="nw">гексагональная $\to$ треугольная</td><td>$g$: <span class="cA">синие</span> на месте, <span class="cB">оранжевая</span> — в соседнюю синюю</td><td class="nw">$2\,d_{\text{тр}}(gx,gy)-2\le d_{\text{гекс}}(x,y)\le 2\,d_{\text{тр}}(gx,gy)+2$</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Деревья: $T_3\sim T_4$</h2>
+  <div class="row">
+    <div class="col" style="flex:1.1;justify-content:center">
+      <ul>
+        <li>Разобьём все вершины $T_3$ на пары соседних (красные рёбра): каждая вершина входит ровно в одну пару.</li>
+        <li>Склеим каждую пару в одну вершину. У неё $3+3-2=4$ соседа, циклов не появляется — получается $T_4$.</li>
+        <li>Отображение «вершина $\mapsto$ её пара»: $d_{T_4}\le d_{T_3}\le 2\,d_{T_4}+1$, т.&nbsp;е. $\lambda=2$, $C=1$.</li>
+      </ul>
+      <div class="block"><div class="bt">Утверждение</div><div class="bb">Все регулярные деревья степени $\ge3$ квазиизометричны.</div></div>
+    </div>
+    <div class="col" style="flex:1"><div class="grow"><div class="fig" data-fig="treeGlue"></div></div></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Цилиндр $\gamma_1\sim\Z$</h2>
+  <div class="row">
+  <div class="col" style="flex:1.35;justify-content:center">
+  <p>Вершины $\gamma_1$ — целые числа; <span class="nw">$f\colon\gamma_1\to\Z$, $\ f(n):=n$ — биекция.</span></p>
+  <ul>
+    <li>По одному ребру номер меняется не больше чем на $10$, поэтому $|m-n|\le 10\,d_{\gamma_1}(m,n)$.</li>
+    <li>Идя по рёбрам $k\to k\pm1$, дойдём от $n$ до $m$ за $|m-n|$ шагов, поэтому $d_{\gamma_1}(m,n)\le|m-n|$.</li>
+  </ul>
+  <div class="block" style="margin-top:16px"><div class="bb">
+    $$d_{\gamma_1}(m,n)\le d_\Z\bigl(f(m),f(n)\bigr)\le 10\,d_{\gamma_1}(m,n)$$
+    Квазиизометрия с $\lambda=10$, $C=0$.
+  </div></div>
+  </div>
+  <div class="col" style="flex:1"><div class="grow"><div class="fig" data-fig="tubeRoll"></div></div></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Число концов</h2>
+  <div class="block"><div class="bt">Определение</div><div class="bb">
+    $c(R):=$ число бесконечных компонент связности графа без шара $\Ball(v,R)$.
+    <b>Число концов:</b> $\ e(\gamma):=\lim\limits_{R\to\infty} c(R)\in\{0,1,2,\dots,\infty\}$.
+  </div></div>
+  <div class="grow"><div class="fig" data-fig="ends" style="top:46px;height:calc(100% - 46px)"></div>
+    <div class="tag" style="left:12.6%;top:0;transform:translateX(-50%)">$\Z$</div>
+    <div class="tag" style="left:37.5%;top:0;transform:translateX(-50%)">$\Lad$</div>
+    <div class="tag" style="left:62.4%;top:0;transform:translateX(-50%)">$\Z^2$</div>
+    <div class="tag" style="left:87.4%;top:0;transform:translateX(-50%)">$T_3$</div>
+  </div>
+  <p class="small muted" style="margin:0">$c(R)$ не убывает, поэтому предел (возможно, бесконечный) есть; от выбора вершины $v$ он не зависит.</p>
+</section>
+
+<section class="slide">
+  <h2>Сколько концов</h2>
+  <div class="grow"><div class="fig" data-fig="endsGallery"></div></div>
+  <p class="small muted" style="text-align:center">У $T_3$ после удаления шара радиуса $R$ остаётся $3\cdot2^R$ бесконечных компонент.</p>
+</section>
+
+<section class="slide">
+  <h2>Концы — грубый инвариант</h2>
+  <div class="block"><div class="bt">Теорема</div><div class="bb">Если $\gamma\sim \delta$, то $e(\gamma)=e(\delta)$.</div></div>
+  <p><b>Идея.</b> Квазиизометрия переводит соседние вершины в близкие, а далёкие — в далёкие.
+    Поэтому бесконечная компонента переходит в «почти связное» неограниченное множество далеко от шара,
+    и разные компоненты не могут склеиться: иначе обратное отображение склеило бы их в $\gamma$.</p>
+  <div class="block"><div class="bt">Следствия</div><div class="bb">
+    $e(\Z)=2$, $e(\Z^2)=1$, $e(T_3)=\infty$, поэтому $\Z$, $\Z^2$ и $T_3$ попарно не квазиизометричны.<br>
+    Значит, и цилиндр $\gamma_1\sim\Z$ не квазиизометричен королевскому графу $\gamma_2\sim\Z^2$.
+  </div></div>
+</section>
+
+<section class="slide">
+  <h2>Какое бывает число концов</h2>
+  <div class="grow"><div class="fig" data-fig="bouquet"></div></div>
+  <p>Букет из $k$ лучей имеет $k$ концов: бывает любое конечное число.</p>
+  <div class="block"><div class="bt">Теорема (Х.&nbsp;Хопф, 1944)</div><div class="bb">
+    Пусть граф $\gamma$ вершинно-транзитивен: для любых двух вершин $u,v$ есть автоморфизм $\gamma$, переводящий $u$ в $v$.
+    Тогда $e(\gamma)\in\{0,1,2,\infty\}$.
+  </div></div>
+</section>
+
+<section class="slide">
+  <h2>Эквивалентные лучи</h2>
+  <ul>
+    <li><b>Луч</b> — бесконечный путь $v_0v_1v_2\ldots$ без повторений вершин.</li>
+    <li>Пусть $\gamma$ — граф. Лучи $r_1$, $r_2$ <b>эквивалентны</b>, если для любого шара $\Ball$ их хвосты — бесконечные части
+      $r_1\setminus\Ball$ и $r_2\setminus\Ball$ — лежат в одной компоненте связности $\gamma\setminus\Ball$.</li>
+    <li><b>Конец</b> — класс эквивалентных лучей. Число классов равно $e(\gamma)$.</li>
+  </ul>
+  <div class="grow"><div class="fig" data-fig="rayEquiv"></div></div>
+  <p class="small muted" style="margin:0">В $\Z^2$ любые два луча эквивалентны: конец один. В $T_3$ лучи, ушедшие в разные ветви, — нет.</p>
+</section>
+
+<section class="slide">
+  <h2>Тонкие и толстые концы</h2>
+  <ul>
+    <li>Конец — класс эквивалентных лучей.</li>
+    <li>Конец <b>толстый</b>, если в нём есть бесконечно много попарно непересекающихся лучей, и <b>тонкий</b> иначе.</li>
+  </ul>
+  <div class="grow"><div class="fig" data-fig="thickRays"></div></div>
+</section>
+
+<section class="slide">
+  <h2>Гексагональная решётка внутри $\Z^2$</h2>
+  <div class="row">
+    <div class="col" style="flex:1.2"><div class="grow"><div class="fig" data-fig="brick"></div></div></div>
+    <div class="col" style="flex:1;justify-content:center">
+      <p>Выбросим из $\Z^2$ каждое второе горизонтальное ребро в шахматном порядке — получится «кирпичная кладка».</p>
+      <p>У каждой вершины три соседа, каждый кирпич — шестиугольник.</p>
+      <p>Если сдвинуть вершины, кладка превращается в обычную гексагональную решётку: это <i>тот же граф</i>.</p>
+      <p class="small muted">Это наблюдаемое следствие уже известного факта: все решётки на плоскости квазиизометричны.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Теорема Халина</h2>
+  <div class="row">
+    <div class="col" style="flex:1.3;justify-content:center">
+      <div class="block"><div class="bt">Теорема (Р.&nbsp;Халин, 1964)</div><div class="bb">
+        Граф с толстым концом содержит подразбиение гексагональной решётки.
+      </div></div>
+      <p>Сравните с теоремой Понтрягина–Куратовского: там препятствие — подразбиение конечного графа,
+        здесь — подразбиение бесконечной решётки.</p>
+    </div>
+    <div class="col" style="flex:1"><div class="grow"><div class="fig" data-fig="hexHalin"></div></div></div>
+  </div>
+  <div class="foot">Короткое доказательство: Т.&nbsp;С.&nbsp;Казанцева, А.&nbsp;А.&nbsp;Арутюнов. Мат. просвещение, сер. 3, вып. 33 (2024), 133–147.</div>
+</section>
+
+<section class="slide">
+  <h2>Функция роста</h2>
+  <div class="row">
+    <div class="col" style="flex:1.05;justify-content:center">
+      <div class="block"><div class="bt">Определение</div><div class="bb">
+        Пусть $\gamma$ — граф, $v$ — его вершина. $f_v(n):=\#\Ball(v,n)$ — число вершин графа на расстоянии $\le n$ от $v$.
+      </div></div>
+      <table class="plain">
+        <tr><th></th><th>$f_v(n)$</th><th>главный член</th></tr>
+        <tr><td>$\Z$</td><td>$2n+1$</td><td>$2n$</td></tr>
+        <tr><td>$\Z^2$</td><td>$2n^2+2n+1$</td><td>$2n^2$</td></tr>
+        <tr><td>$\Z^3$</td><td>$\tfrac13(2n+1)(2n^2+2n+3)$</td><td>$\tfrac43 n^3$</td></tr>
+      </table>
+    </div>
+    <div class="col" style="flex:1"><div class="grow"><div class="fig" data-fig="octa"></div></div></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>$\Z^2$ и $T_3$</h2>
+  <div class="grow"><div class="fig" data-fig="race"></div></div>
+  <p style="margin:10px 0 4px">В $\Z^2$: $\ \#\Ball(v,n)=2n^2+2n+1$.</p>
+  <p style="margin:0">В $T_3$ каждая следующая сфера вдвое больше предыдущей: $\ \#\Ball(v,n)=3\cdot2^n-2$.</p>
+</section>
+
+<section class="slide">
+  <h2>Тип роста</h2>
+  <p style="margin-bottom:10px">У $\Z$ и $\Lad$ функции роста $2n+1$ и $4n$ разные, но обе растут «как $n$»: важна <b>скорость</b>.</p>
+  <div class="block"><div class="bt">Определение</div><div class="bb" style="font-size:28px">
+    $f\preceq g$, если $f(n)\le C\,g(Cn+C)+C$ при некотором $C$ и всех $n$;
+    $f\approx g$, если $f\preceq g$ и $g\preceq f$.<br>
+    <b>Тип роста</b> графа $\gamma$ — класс эквивалентности по $\approx$ его функции роста $f_v(n):=\#\Ball(v,n)$.
+    От выбора вершины $v$ он не зависит: $\Ball(v,n)\subset\Ball\bigl(u,\,n+d(u,v)\bigr)$, поэтому $f_v\preceq f_u$ и $f_u\preceq f_v$.
+  </div></div>
+  <div class="block"><div class="bt">Примеры</div><div class="bb" style="font-size:28px">
+    $$\ln n\ \prec\ n\ \prec\ n^2\ \prec\ n^3\ \prec\ \dots\ \prec\ e^{\sqrt n}\ \prec\ 2^n\approx 3^n\approx e^n,$$
+    где $f\prec g$ означает: $f\preceq g$, но $g\not\preceq f$.
+    <div style="margin-top:6px"><b>Связный граф со степенями $\le D$ растёт не быстрее экспоненты:</b>
+      $\ \#\Ball(v,n)\le D^{n+1}$, то есть $f_v\preceq 2^n$. Если граф бесконечен, то ещё и $f_v\succeq n$.</div>
+    <div class="small" style="margin-top:4px">Бывает и <b>промежуточный</b> рост — быстрее любого многочлена, но медленнее
+      экспоненты, как $e^{\sqrt n}$ (Р.&nbsp;И.&nbsp;Григорчук, 1984).</div>
+  </div></div>
+</section>
+
+<section class="slide">
+  <h2>Рост — грубый инвариант</h2>
+  <div class="block"><div class="bt">Теорема</div><div class="bb">
+    Пусть степени всех вершин графов $\gamma$ и $\delta$ не больше $D$. Если $\gamma\sim \delta$, то $f_\gamma\approx f_\delta$.
+  </div></div>
+  <p class="small"><b>Идея.</b> Пусть $f\colon \gamma\to \delta$ — квазиизометрия. Шар $\Ball(v,n)$ переходит в $\Ball\bigl(f(v),\lambda n+C\bigr)$.
+    Если $f(x)=f(y)$, то $d(x,y)\le\lambda C$, поэтому в каждую точку переходит не больше
+    $\#\Ball(x,\lambda C)\le D^{\lambda C+1}$ вершин. Отсюда $\ f_\gamma(n)\le D^{\lambda C+1}\,f_\delta(\lambda n+C)$.</p>
+  <div class="row" style="flex:0 0 auto;align-items:center">
+    <div class="col"><p class="small">Пример графа без равномерной ограниченности степеней: луч, к вершине $n$ которого
+      приклеено $n$ листьев. Он квазиизометричен лучу, но $\#\Ball(v_0,n)\approx n^2/2$ — рост квадратичный.</p></div>
+    <div class="col" style="height:180px"><div class="grow"><div class="fig" data-fig="leaves"></div></div></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Типы роста</h2>
+  <div class="row">
+    <div class="col" style="flex:1.9;justify-content:center">
+      <table class="plain" style="font-size:26px">
+        <tr><th>$\gamma$</th><th>$\#\Ball(v,n)$</th><th>тип</th><th>концы</th></tr>
+        <tr><td>$\Z$</td><td>$2n+1$</td><td>$n$</td><td>$2$</td></tr>
+        <tr><td>$\Lad$</td><td>$4n$</td><td>$n$</td><td>$2$</td></tr>
+        <tr><td>$\Z^2$</td><td>$2n^2+2n+1$</td><td>$n^2$</td><td>$1$</td></tr>
+        <tr><td>$\Z^3$</td><td>$\tfrac13(2n+1)(2n^2+2n+3)$</td><td>$n^3$</td><td>$1$</td></tr>
+        <tr><td>$\Z^d$</td><td>$(2^d/d!)\,n^d+\ldots$</td><td>$n^d$</td><td>$1$</td></tr>
+        <tr><td>группа Григорчука</td><td class="nw">$\exp\bigl(n^{\alpha+o(1)}\bigr)$, $\alpha\approx0{,}767$</td><td>промежуточный</td><td>$1$</td></tr>
+        <tr><td>$T_3$</td><td>$3\cdot2^n-2$</td><td>$2^n$</td><td>$\infty$</td></tr>
+      </table>
+      <p class="small" style="margin-top:8px">Все графы в таблице <b>вершинно-транзитивны</b>; «группа Григорчука» — это тоже такой граф.</p>
+      <p class="small muted" style="margin-top:8px">Для группы Григорчука: оценка сверху — Л.&nbsp;Бартольди (1998), снизу — А.&nbsp;Эршлер, Т.&nbsp;Чжэн (2020).
+        Точная формула для $\#\Ball(v,n)$ неизвестна.</p>
+    </div>
+    <div class="col" style="justify-content:center">
+      <div class="block"><div class="bt">Следствия</div><div class="bb small" style="font-size:26px">
+        $\Z^2\not\sim\Z^3$, $\quad\Z\not\sim T_3$.<br>
+        Рост тоже отличает цилиндр $\gamma_1$ (как $n$) от королевского графа $\gamma_2$ (как $n^2$).
+      </div></div>
+      <div class="block"><div class="bt">Рост и теорема Хопфа</div><div class="bb small" style="font-size:24px">
+        По Хопфу у вершинно-транзитивного графа всего 4 варианта числа концов. Рост различает гораздо больше:
+        $\Z^2$, $\Z^3$, …, группа Григорчука — у всех один конец, но рост разный.<br>
+        Зато $T_3$ и плоскость Лобачевского рост не различает, а концы различают: $\infty$ и $1$.
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Плоскость Лобачевского</h2>
+  <div class="row">
+    <div class="col" style="flex:1.25"><div class="grow"><div class="fig" data-fig="lobachevsky"></div></div></div>
+    <div class="col" style="flex:1;justify-content:center">
+      <p>Разбиение плоскости Лобачевского на правильные семиугольники, по три в каждой вершине (модель Пуанкаре).</p>
+      <p>Шар — плитки на расстоянии $\le n$ от центральной (переход — через общую сторону).</p>
+      <p>Число плиток растёт экспоненциально — как в дереве, а не как в $\Z^2$:
+        $\ \#\Ball\approx e^n$, где $n$ — номер шага.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Рост и концы</h2>
+  <div class="row">
+    <div class="col" style="flex:1.5">
+      <div class="block"><div class="bt">Теорема</div><div class="bb">Если $f(n)\approx n$, то все концы графа тонкие.</div></div>
+      <p class="small"><b>Доказательство.</b> Тогда $f(n)\le Cn$ при некотором $C$. Пусть конец толстый; возьмём в нём $2C+1$ попарно
+        непересекающихся лучей. Граф связен, поэтому из $v$ до каждого из них можно дойти не более чем за $k$ шагов.
+        Ещё $t$ шагов вдоль каждого луча дают $t+1$ новую вершину на каждом:
+        $$f(k+t)\ \ge\ (2C+1)(t+1).$$
+        При $t=k$: $\ f(2k)\ge(2C+1)(k+1)>C\cdot 2k$ — противоречие. $\square$</p>
+      <p class="small muted">Сравните с теоремой Халина: в толстом конце сидит гексагональная решётка, а она растёт квадратично.</p>
+    </div>
+    <div class="col" style="flex:0.75"><div class="grow"><div class="fig" data-fig="raysProof"></div></div></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Обратное неверно: кактусы</h2>
+  <div class="grow"><div class="fig" data-fig="cactus"></div></div>
+  <p style="margin-top:8px">Луч $v_0v_1v_2\ldots$; к вершине $v_n$ приклеен «кактус» — ножка и полное двоичное дерево глубины $n-1$.
+    Конец один, и он тонкий. Но шар радиуса $R$ содержит целиком кактус при вершине $v_{R/2}$, поэтому рост экспоненциальный.</p>
+  <div class="foot">Пример из статьи: Т.&nbsp;С.&nbsp;Казанцева, А.&nbsp;А.&nbsp;Арутюнов. Мат. просвещение, сер. 3, вып. 33 (2024).</div>
+</section>
+
+<section class="slide">
+  <h2>Рост и концы: что бывает</h2>
+  <table class="grid2 compact">
+    <tr><th></th><th>1 тонкий конец</th><th>2 конца</th><th>1 толстый конец</th><th>$\infty$ концов</th></tr>
+    <tr><th>как $n$</th><td>луч</td><td class="cA">$\Z$, $\Lad$, $\gamma_1$</td><td><b class="cR">не бывает</b></td><td><b class="cR">не бывает</b></td></tr>
+    <tr><th>как $n^2$</th><td>бывает*</td><td>бывает*</td><td class="cA">$\Z^2$, $\gamma_2$</td><td>гребёнка</td></tr>
+    <tr><th>промежуточный</th><td>бывает*</td><td>бывает*</td><td class="cA">группа Григорчука</td><td>бывает*</td></tr>
+    <tr><th>экспоненциально</th><td><b>кактус</b></td><td>бывает*</td><td class="cA">плоскость Лобачевского</td><td class="cA">$T_3$</td></tr>
+  </table>
+  <ul class="small" style="margin-top:18px">
+    <li><b>Гребёнка</b> — луч, к каждой вершине которого приклеен ещё один луч.</li>
+    <li>* — луч, прямая или гребёнка, к вершинам которых приклеены конечные деревья подходящего размера, как у кактуса.</li>
+    <li><span class="cA">Синим</span> — графы, все вершины которых одинаковы (вершинно-транзитивные). Для таких графов
+      другие клетки невозможны.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Неподвижные точки</h2>
+  <div class="row">
+    <div class="col" style="flex:1;justify-content:center">
+      <p>Точная задача: решить уравнение $f(x)=x$.</p>
+      <p>Нажимаем $\cos$ на калькуляторе снова и снова:</p>
+      <p>$0{,}15\to0{,}989\to0{,}550\to0{,}853\to\ldots\to0{,}739$</p>
+      <p>Это решение уравнения $\cos x=x$.</p>
+      <p class="small muted">Поворот плоскости оставляет на месте центр, у сдвига неподвижных точек нет.</p>
+    </div>
+    <div class="col" style="flex:1"><div class="grow"><div class="fig" data-fig="cobweb"></div></div>
+      <p class="small muted" style="text-align:center;margin:6px 0 0">Метод простой итерации $x_{k+1}:=\cos x_k$ (диаграмма Ламерея)</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Центр конечного дерева</h2>
+  <div class="row">
+    <div class="col" style="flex:1.25"><div class="grow"><div class="fig" data-fig="leafPeel"></div></div></div>
+    <div class="col" style="flex:1;justify-content:center">
+      <p>Эксцентриситет вершины: $\operatorname{ecc}(v):=\max_u d(v,u)$.</p>
+      <p><b>Центром</b> графа называются вершины наименьшего эксцентриситета.</p>
+      <div class="block"><div class="bt">Теорема (К.&nbsp;Жордан, 1869)</div><div class="bb">Центр дерева — вершина или ребро.</div></div>
+      <p class="small"><b>Доказательство.</b> Оборвём все листья сразу. Самая далёкая от любой вершины — лист,
+        поэтому эксцентриситеты оставшихся вершин уменьшатся на 1, а центр не изменится.
+        Повторяем, пока не останется одна вершина или одно ребро. Это и есть центр. $\square$</p>
+      <p class="small muted">На рисунке в вершинах записаны их эксцентриситеты.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Симметрии конечного дерева</h2>
+  <div class="block"><div class="bt">Следствие</div><div class="bb">
+    Любая симметрия конечного дерева оставляет на месте вершину или ребро — его центр.
+  </div></div>
+  <div class="grow"><div class="fig" data-fig="symTree"></div></div>
+  <p>Для графов с циклами это неверно: поворот пятиугольника не оставляет на месте ни одной вершины и ни одного ребра.</p>
+</section>
+
+<section class="slide">
+  <h2>Движения бесконечного дерева</h2>
+  <div class="grow"><div class="fig" data-fig="t3motions"></div></div>
+  <div class="block"><div class="bt">Теорема (Ж.&nbsp;Титс, 1970)</div><div class="bb">
+    Любая изометрия дерева либо оставляет на месте вершину или середину ребра,
+    либо имеет единственную <i>ось</i> — бесконечную в обе стороны прямую, вдоль которой происходит сдвиг.
+  </div></div>
+</section>
+
+<section class="slide">
+  <h2>Грубые неподвижные точки</h2>
+  <ul>
+    <li>Наивная попытка: $d\bigl(f(x),x\bigr)\le C$. Не годится: для сдвига $x\mapsto x+1$ это верно для любой точки.</li>
+    <li>Правильно: <b>орбита ограничена</b> — точки $x,\ f(x),\ f(f(x)),\dots$ не уходят далеко.</li>
+  </ul>
+  <div class="grow"><div class="fig" data-fig="orbitsZ"></div></div>
+  <p class="small">Отражение $x\mapsto1-x$: неподвижной вершины нет, но орбита $\{0,1\}$ ограничена. У сдвига все орбиты уходят на бесконечность.</p>
+</section>
+
+<section class="slide">
+  <h2>От грубого к точному</h2>
+  <div class="row" style="flex:0 0 auto;gap:28px;align-items:stretch">
+    <div class="col" style="flex:1"><div class="block" style="height:100%"><div class="bt">Теорема</div><div class="bb small" style="font-size:24px">
+      Если у изометрии дерева есть ограниченная орбита, то у неё есть неподвижная точка — вершина или середина ребра.
+    </div></div></div>
+    <div class="col" style="flex:1.5"><div class="block" style="height:100%"><div class="bt">Теорема (Муравьёв, 2025)</div><div class="bb small" style="font-size:24px">
+      Пусть $f$ — изометрия графа $\gamma$.
+      <ol style="margin:4px 0 0;padding-left:1.2em">
+        <li>Если число концов $\gamma$ конечно и не меньше $3$, то все орбиты $f$ ограничены: каждая точка — грубая неподвижная.</li>
+        <li>Если $d\bigl(x_0,f^n(x_0)\bigr)\to\infty$ при $n\to\infty$, то у $f$ есть неподвижный конец.</li>
+      </ol>
+    </div></div></div>
+  </div>
+  <div class="grow" style="margin-top:14px"><div class="fig" data-fig="orbitCenter"></div></div>
+</section>
+
+<section class="slide">
+  <h2>Литература</h2>
+  <ul style="font-size:26px;line-height:1.3">
+    <li>А.&nbsp;А.&nbsp;Арутюнов. <i>Лекции по грубой геометрии</i>. М.: МЦНМО, 2026. 248 с.</li>
+    <li>Т.&nbsp;С.&nbsp;Казанцева, А.&nbsp;А.&nbsp;Арутюнов. Короткое доказательство теоремы Халина и некоторые следствия из неё.
+      Мат. просвещение, сер. 3, вып. 33 (2024), 133–147.</li>
+    <li>А.&nbsp;Арутюнов. Математическая грубость (в хорошем смысле слова). ТрВ-Наука, 2023.</li>
+    <li>J.&nbsp;Roe. What is… a coarse space? <i>Notices of the AMS</i> 53 (6) (2006), 669.</li>
+    <li>J.&nbsp;Roe. <i>Lectures on Coarse Geometry</i>. AMS, University Lecture Series 31, 2003.</li>
+    <li>R.&nbsp;Diestel. <i>Graph Theory</i>, 5th ed. Graduate Texts in Mathematics 173, Springer, 2017. (Гл. 8: концы, теорема Халина.)</li>
+    <li>C.&nbsp;Druțu, M.&nbsp;Kapovich. <i>Geometric Group Theory</i>. AMS Colloquium Publications 63, 2018.</li>
+    <li>P.&nbsp;Nowak, G.&nbsp;Yu. <i>Large Scale Geometry</i>. EMS Textbooks in Mathematics, 2012.</li>
+    <li>R.&nbsp;Grigorchuk, I.&nbsp;Pak. Groups of intermediate growth: an introduction for beginners. arXiv:math/0607384, 2006.</li>
+    <li>U.&nbsp;Bunke. Coarse geometry. arXiv:2305.09203, 2023.</li>
+    <li>M.&nbsp;Gromov. Hyperbolic groups. In: <i>Essays in Group Theory</i>, MSRI Publ. 8, Springer, 1987, 75–263.</li>
+    <li>M.&nbsp;Gromov. Asymptotic invariants of infinite groups. In: <i>Geometric Group Theory</i>, vol. 2,
+      LMS Lecture Note Ser. 182, Cambridge Univ. Press, 1993, 1–295.</li>
+  </ul>
+</section>
+
+<section class="slide title-slide">
+  <h1>Спасибо за внимание!</h1>
+  <div style="margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:14px">
+    <svg viewBox="0 0 37 37" width="380" height="380" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect width="37" height="37" fill="#fff"/><path d="M2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM7 2h1v1h-1zM8 2h1v1h-1zM11 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM23 2h1v1h-1zM25 2h1v1h-1zM28 2h1v1h-1zM29 2h1v1h-1zM30 2h1v1h-1zM31 2h1v1h-1zM32 2h1v1h-1zM33 2h1v1h-1zM34 2h1v1h-1zM2 3h1v1h-1zM8 3h1v1h-1zM13 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM34 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM22 4h1v1h-1zM23 4h1v1h-1zM24 4h1v1h-1zM28 4h1v1h-1zM30 4h1v1h-1zM31 4h1v1h-1zM32 4h1v1h-1zM34 4h1v1h-1zM2 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM13 5h1v1h-1zM17 5h1v1h-1zM20 5h1v1h-1zM23 5h1v1h-1zM24 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM31 5h1v1h-1zM32 5h1v1h-1zM34 5h1v1h-1zM2 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM11 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM15 6h1v1h-1zM16 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM22 6h1v1h-1zM28 6h1v1h-1zM30 6h1v1h-1zM31 6h1v1h-1zM32 6h1v1h-1zM34 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM20 7h1v1h-1zM21 7h1v1h-1zM23 7h1v1h-1zM26 7h1v1h-1zM28 7h1v1h-1zM34 7h1v1h-1zM2 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h1v1h-1zM29 8h1v1h-1zM30 8h1v1h-1zM31 8h1v1h-1zM32 8h1v1h-1zM33 8h1v1h-1zM34 8h1v1h-1zM10 9h1v1h-1zM13 9h1v1h-1zM16 9h1v1h-1zM18 9h1v1h-1zM20 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM23 9h1v1h-1zM24 9h1v1h-1zM26 9h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM11 10h1v1h-1zM12 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM19 10h1v1h-1zM21 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM25 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM29 10h1v1h-1zM30 10h1v1h-1zM31 10h1v1h-1zM32 10h1v1h-1zM2 11h1v1h-1zM5 11h1v1h-1zM6 11h1v1h-1zM13 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM24 11h1v1h-1zM25 11h1v1h-1zM28 11h1v1h-1zM29 11h1v1h-1zM31 11h1v1h-1zM32 11h1v1h-1zM34 11h1v1h-1zM4 12h1v1h-1zM7 12h1v1h-1zM8 12h1v1h-1zM10 12h1v1h-1zM11 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM18 12h1v1h-1zM19 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM24 12h1v1h-1zM27 12h1v1h-1zM30 12h1v1h-1zM32 12h1v1h-1zM33 12h1v1h-1zM4 13h1v1h-1zM5 13h1v1h-1zM6 13h1v1h-1zM11 13h1v1h-1zM15 13h1v1h-1zM18 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM23 13h1v1h-1zM24 13h1v1h-1zM25 13h1v1h-1zM30 13h1v1h-1zM31 13h1v1h-1zM32 13h1v1h-1zM33 13h1v1h-1zM34 13h1v1h-1zM2 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM16 14h1v1h-1zM18 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM25 14h1v1h-1zM26 14h1v1h-1zM27 14h1v1h-1zM30 14h1v1h-1zM31 14h1v1h-1zM2 15h1v1h-1zM6 15h1v1h-1zM7 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM17 15h1v1h-1zM20 15h1v1h-1zM23 15h1v1h-1zM27 15h1v1h-1zM28 15h1v1h-1zM31 15h1v1h-1zM32 15h1v1h-1zM33 15h1v1h-1zM34 15h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM12 16h1v1h-1zM15 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM22 16h1v1h-1zM27 16h1v1h-1zM28 16h1v1h-1zM30 16h1v1h-1zM31 16h1v1h-1zM32 16h1v1h-1zM33 16h1v1h-1zM2 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM23 17h1v1h-1zM27 17h1v1h-1zM28 17h1v1h-1zM29 17h1v1h-1zM32 17h1v1h-1zM2 18h1v1h-1zM8 18h1v1h-1zM10 18h1v1h-1zM12 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM17 18h1v1h-1zM19 18h1v1h-1zM24 18h1v1h-1zM25 18h1v1h-1zM26 18h1v1h-1zM27 18h1v1h-1zM29 18h1v1h-1zM30 18h1v1h-1zM34 18h1v1h-1zM2 19h1v1h-1zM6 19h1v1h-1zM20 19h1v1h-1zM21 19h1v1h-1zM22 19h1v1h-1zM25 19h1v1h-1zM28 19h1v1h-1zM29 19h1v1h-1zM31 19h1v1h-1zM32 19h1v1h-1zM33 19h1v1h-1zM34 19h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM5 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM20 20h1v1h-1zM22 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM27 20h1v1h-1zM29 20h1v1h-1zM30 20h1v1h-1zM32 20h1v1h-1zM33 20h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM7 21h1v1h-1zM10 21h1v1h-1zM11 21h1v1h-1zM13 21h1v1h-1zM14 21h1v1h-1zM16 21h1v1h-1zM18 21h1v1h-1zM21 21h1v1h-1zM22 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM25 21h1v1h-1zM26 21h1v1h-1zM27 21h1v1h-1zM29 21h1v1h-1zM30 21h1v1h-1zM31 21h1v1h-1zM32 21h1v1h-1zM34 21h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM9 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM16 22h1v1h-1zM20 22h1v1h-1zM23 22h1v1h-1zM26 22h1v1h-1zM27 22h1v1h-1zM29 22h1v1h-1zM30 22h1v1h-1zM31 22h1v1h-1zM2 23h1v1h-1zM5 23h1v1h-1zM6 23h1v1h-1zM7 23h1v1h-1zM12 23h1v1h-1zM13 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM18 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM25 23h1v1h-1zM26 23h1v1h-1zM27 23h1v1h-1zM28 23h1v1h-1zM31 23h1v1h-1zM34 23h1v1h-1zM2 24h1v1h-1zM4 24h1v1h-1zM7 24h1v1h-1zM8 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM27 24h1v1h-1zM31 24h1v1h-1zM32 24h1v1h-1zM33 24h1v1h-1zM2 25h1v1h-1zM5 25h1v1h-1zM6 25h1v1h-1zM7 25h1v1h-1zM10 25h1v1h-1zM11 25h1v1h-1zM13 25h1v1h-1zM14 25h1v1h-1zM18 25h1v1h-1zM20 25h1v1h-1zM21 25h1v1h-1zM22 25h1v1h-1zM23 25h1v1h-1zM24 25h1v1h-1zM28 25h1v1h-1zM31 25h1v1h-1zM32 25h1v1h-1zM33 25h1v1h-1zM34 25h1v1h-1zM2 26h1v1h-1zM4 26h1v1h-1zM5 26h1v1h-1zM6 26h1v1h-1zM8 26h1v1h-1zM9 26h1v1h-1zM10 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM16 26h1v1h-1zM19 26h1v1h-1zM20 26h1v1h-1zM21 26h1v1h-1zM24 26h1v1h-1zM26 26h1v1h-1zM27 26h1v1h-1zM28 26h1v1h-1zM29 26h1v1h-1zM30 26h1v1h-1zM32 26h1v1h-1zM33 26h1v1h-1zM34 26h1v1h-1zM10 27h1v1h-1zM12 27h1v1h-1zM13 27h1v1h-1zM16 27h1v1h-1zM18 27h1v1h-1zM19 27h1v1h-1zM20 27h1v1h-1zM21 27h1v1h-1zM22 27h1v1h-1zM25 27h1v1h-1zM26 27h1v1h-1zM30 27h1v1h-1zM32 27h1v1h-1zM33 27h1v1h-1zM34 27h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM7 28h1v1h-1zM8 28h1v1h-1zM11 28h1v1h-1zM15 28h1v1h-1zM17 28h1v1h-1zM18 28h1v1h-1zM19 28h1v1h-1zM24 28h1v1h-1zM25 28h1v1h-1zM26 28h1v1h-1zM28 28h1v1h-1zM30 28h1v1h-1zM32 28h1v1h-1zM33 28h1v1h-1zM2 29h1v1h-1zM8 29h1v1h-1zM10 29h1v1h-1zM12 29h1v1h-1zM13 29h1v1h-1zM14 29h1v1h-1zM15 29h1v1h-1zM16 29h1v1h-1zM17 29h1v1h-1zM19 29h1v1h-1zM20 29h1v1h-1zM21 29h1v1h-1zM22 29h1v1h-1zM25 29h1v1h-1zM26 29h1v1h-1zM30 29h1v1h-1zM31 29h1v1h-1zM32 29h1v1h-1zM33 29h1v1h-1zM2 30h1v1h-1zM4 30h1v1h-1zM5 30h1v1h-1zM6 30h1v1h-1zM8 30h1v1h-1zM10 30h1v1h-1zM14 30h1v1h-1zM16 30h1v1h-1zM18 30h1v1h-1zM21 30h1v1h-1zM22 30h1v1h-1zM23 30h1v1h-1zM24 30h1v1h-1zM26 30h1v1h-1zM27 30h1v1h-1zM28 30h1v1h-1zM29 30h1v1h-1zM30 30h1v1h-1zM31 30h1v1h-1zM2 31h1v1h-1zM4 31h1v1h-1zM5 31h1v1h-1zM6 31h1v1h-1zM8 31h1v1h-1zM10 31h1v1h-1zM11 31h1v1h-1zM13 31h1v1h-1zM15 31h1v1h-1zM17 31h1v1h-1zM19 31h1v1h-1zM20 31h1v1h-1zM25 31h1v1h-1zM27 31h1v1h-1zM30 31h1v1h-1zM31 31h1v1h-1zM34 31h1v1h-1zM2 32h1v1h-1zM4 32h1v1h-1zM5 32h1v1h-1zM6 32h1v1h-1zM8 32h1v1h-1zM10 32h1v1h-1zM12 32h1v1h-1zM13 32h1v1h-1zM14 32h1v1h-1zM15 32h1v1h-1zM16 32h1v1h-1zM17 32h1v1h-1zM18 32h1v1h-1zM19 32h1v1h-1zM22 32h1v1h-1zM23 32h1v1h-1zM25 32h1v1h-1zM28 32h1v1h-1zM29 32h1v1h-1zM32 32h1v1h-1zM2 33h1v1h-1zM8 33h1v1h-1zM11 33h1v1h-1zM12 33h1v1h-1zM14 33h1v1h-1zM16 33h1v1h-1zM17 33h1v1h-1zM20 33h1v1h-1zM23 33h1v1h-1zM30 33h1v1h-1zM31 33h1v1h-1zM32 33h1v1h-1zM2 34h1v1h-1zM3 34h1v1h-1zM4 34h1v1h-1zM5 34h1v1h-1zM6 34h1v1h-1zM7 34h1v1h-1zM8 34h1v1h-1zM10 34h1v1h-1zM14 34h1v1h-1zM15 34h1v1h-1zM17 34h1v1h-1zM19 34h1v1h-1zM25 34h1v1h-1zM26 34h1v1h-1zM28 34h1v1h-1zM29 34h1v1h-1zM33 34h1v1h-1z" fill="#111"/></svg>
+    <div class="inst" style="font-size:28px">forodirch.github.io/Coarse-Lecture-HSM</div>
+  </div>
+</section>
